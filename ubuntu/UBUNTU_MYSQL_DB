@@ -1,0 +1,80 @@
+EXPORT DB
+	mysqldump -uroot -proot enuke_cricket > backupfile_enuke_cricket.sql
+
+
+IMPORT DB => open mysql from the directory where your sql file exists =>
+	home/enuke# > mysql -uroot -proot
+	home/enuke# > \.dumpsqlfile.sql
+
+SSH ACCESS =>
+	ssh -i memr3.pem ubuntu@enukesoftware.com
+
+SCP COMMAND =>
+	scp -i member.pem seource/file.ext destination/
+	scp -i memr3.pem ubuntu@enukesoftware.com:/var/www/cricket/cricket-ipl/cricket-sandeep.sql .
+
+
+GIT COMMAND FOR BRANCH =>
+	git checkout -b ankur 					[create a branch]
+	git add -A 								[add all files]
+	git commit -m 'new branch ankur'		[commit to new branch]
+	git push origin ankur					[push to branch]
+	---
+	git checkout master						[jump to master branch]
+	git add -A 								[add all files]
+	git commit -m 'master folder add'		[commit to master]
+	git pull origin master					[pull from master]
+	git push origin master					[push to master]
+	---
+	git checkout master						[jump to master]
+	git merge ankur							[merge master with branch]
+
+
+
+DB QUERIES =>
+	-- create temporary copy of data
+	CREATE TEMPORARY TABLE temp_table
+	SELECT * FROM players where id = 1;
+
+	-- drop unnecessary column
+	ALTER TABLE temp_table DROP COLUMN `batting_stats`;
+	ALTER TABLE temp_table DROP COLUMN `bowling_stats`;
+
+	-- select data from temp
+	SELECT * FROM temp_table where id = 1;
+
+
+
+STUDY POINTS =>
+	laravel eloquent relations video tutorials
+	javascript promise
+	javascript clousers
+
+
+
+STORED PROCEDURE =>
+	DROP FUNCTION IF EXISTS myalphanum; 
+	DELIMITER | 
+	CREATE FUNCTION myalphanum( str varchar(255) ) RETURNS varchar(255) 
+	BEGIN 
+	  DECLARE i, len SMALLINT DEFAULT 1; 
+	  DECLARE ret varchar(255) DEFAULT ''; 
+	  DECLARE c CHAR(1); 
+	  SET len = CHAR_LENGTH( str ); 
+	  REPEAT 
+	    BEGIN 
+	      SET c = MID( str, i, 1 ); 
+	      IF c = ' ' THEN 
+	        SET ret= CONCAT(ret,'-'); 
+	      ELSEIF c REGEXP '[[:alnum:]]' THEN 
+	      	SET ret=CONCAT(ret,c); 
+	      END IF; 
+	      SET i = i + 1; 
+	    END; 
+	  UNTIL i > len END REPEAT; 
+	  RETURN ret; 
+	END | 
+	DELIMITER ;
+
+
+
